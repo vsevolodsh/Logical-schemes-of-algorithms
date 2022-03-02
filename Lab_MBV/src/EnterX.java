@@ -2,13 +2,13 @@ import java.util.Scanner;
 
 public class EnterX {
 
-
+    // entrance = YnX1^Y1Y2v1Y3X2^Y4v2Yk
     //result = YnY1Y2Y4Yk
     public static void inputAllX(String entrance) // cделать проверку на то, что значений столько же сколько и х
     {
         LSA lsa = new LSA();
         String[] allX = lsa.getAllX(entrance); //allX = X1X2
-        String[] entranceArr = entrance.split("");  // entrance = YnX1^Y1Y2v1Y3X2^Y4v2Yk
+        String[] entranceArr = entrance.split("");  
         System.out.println("Введите все значения логических условий X: ");
         Scanner scn = new Scanner(System.in);
         String xValue = scn.nextLine();     // xValue =11
