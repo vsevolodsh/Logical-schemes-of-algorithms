@@ -1,57 +1,64 @@
+import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
-import java.util.SplittableRandom;
 
-public class EnterX {
+public class LSA {
 
-    // entrance = YnX1^Y1Y2v1Y3X2^Y4v2Yk
-    //result = YnY1Y2Y4Yk
-    public static void inputAllX(String entrance) // cделать проверку на то, что значений столько же сколько и х
-    {
-        LSA lsa = new LSA();
-        String[] allX = lsa.getAllX(entrance);
-        String[] entranceArr = entrance.split("");  //Делим начальную строку на элементы
-        String[] AllNumAfterY = lsa.getAllNumAfterY(entrance);
-        String[] AllNumAfterX = lsa.getAllNumAfterX(entrance);
-        int NumAfterYCount = 0;
-        int NumAfterXCount = 0;
-        System.out.println("Введите все значения логических условий X: ");
+    public static String[] Alphabet = "YnkX^vw1234567890".split("");
+
+    public static String consoleInput() {
+        System.out.println("Введите ЛСА: ");
         Scanner scn = new Scanner(System.in);
-        String xValue = scn.nextLine();     // Вводим значения всех х. xValue =11
-        int xValueCount = 0; //Отдельный счетчик для иксов.
-        String[] xValuerArr = new String[255];
-        String[] test = xValue.split(""); //Делим введенные х на элементы.
-        xValuerArr = test;
-        boolean startOfExpression = true;//проверка, для выписывания Yn
-        for (int i = 0; i < entranceArr.length; i++) {
-            if ((entranceArr[i] + AllNumAfterX[NumAfterXCount]).equals(allX[xValueCount] + AllNumAfterX[NumAfterXCount])) {
-                if (startOfExpression) {
-                    System.out.print(entrance.substring(0, i));//Yn
-                    startOfExpression = false; //больше тру он не станет.
-                    NumAfterXCount++;
-                }
+        String entrance = scn.nextLine();
+        if (!checkEntrance(entrance)) {
+            System.out.println("\nПовторите ввод: ");
+            consoleInput();
+        }
+        return entrance;
+    }
 
-                if (xValuerArr[xValueCount].equals("1")) {//если x-ное равно 1:
-                    if (xValueCount < xValuerArr.length-1) {
-                        xValueCount++;//увеличиваем счетчик иксов. он кстати тоже выходит за пределы массива, но думаю фиксится просто
-                    }
-                    int j = i + 1;//вводим счетчик j
+    public static String fileInput(String name) {
+        StringBuilder str = new StringBuilder();
 
-                    while (!entranceArr[j].equals("X") && j < entranceArr.length) {//пока текущий элемент не равен иксу,
-                        if (entranceArr[j].equals("Y")) {//и при этом он равен у,
-                            System.out.print(entranceArr[j] + AllNumAfterY[NumAfterYCount]);//выписываем у и цифру после него
-                            NumAfterYCount++;
-                            j++;//переходим на след элемент
-                        } else {
-                            j++;
-                        }
-                    }
+        try (FileReader reader = new FileReader(name)) {
+            FileInputStream fis = new FileInputStream(name);
+            int c;
+            char[] buff = new char[fis.available()];
 
-                    //  if (xValuerArr[xValueCount].equals("0")) {
-                    // while ()
+            while ((c = reader.read(buff)) > 0) {
+                if (c < buff.length + 1) {
+                    buff = Arrays.copyOf(buff, c);
+                    str.append(buff);
                 }
             }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
+        return str.toString();
+    }
+
+    private static boolean checkEntrance(String entrance) {
+        boolean checkDone = true;
+        String[] newStrArr = entrance.split("");
+        boolean[] checkArr = new boolean[newStrArr.length];
+
+        if (entrance.startsWith("Yn") && entrance.endsWith("Yk")) {
+            for (int i = 0; i < newStrArr.length; i++) {
+                for (int j = 0; j < Alphabet.length; j++) {
+
+                    if (newStrArr[i].equals(Alphabet[j])) {
+                        checkArr[i] = true;
+                    }
+                }
+                if (!checkArr[i]) {
+                    System.out.print("Символ номер " + (i + 1) + " неправильный; ");
+                    checkDone = false;
+                }
+            }
+        } else {
+            System.out.println("Проверьте правильность ввода начального и конечного оператора");
+            checkDone = false;
+        }
+        return checkDone;
     }
 }
-
-
