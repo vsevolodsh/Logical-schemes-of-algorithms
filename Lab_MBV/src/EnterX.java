@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.SplittableRandom;
 
 public class EnterX {
 
@@ -17,7 +18,9 @@ public class EnterX {
         Scanner scn = new Scanner(System.in);
         String xValue = scn.nextLine();     // Вводим значения всех х. xValue =11
         int xValueCount = 0; //Отдельный счетчик для иксов.
-        String[] xValuerArr = xValue.split(""); //Делим введенные х на элементы.
+        String[] xValuerArr = new String[255];
+        String[] test = xValue.split(""); //Делим введенные х на элементы.
+        xValuerArr = test;
         boolean startOfExpression = true;//проверка, для выписывания Yn
         for (int i = 0; i < entranceArr.length; i++) {
             if ((entranceArr[i] + AllNumAfterX[NumAfterXCount]).equals(allX[xValueCount] + AllNumAfterX[NumAfterXCount])) {
@@ -33,7 +36,7 @@ public class EnterX {
                     }
                     int j = i + 1;//вводим счетчик j
 
-                    while (!entranceArr[j].equals("X")) {//пока текущий элемент не равен иксу,
+                    while (!entranceArr[j].equals("X") && j < entranceArr.length) {//пока текущий элемент не равен иксу,
                         if (entranceArr[j].equals("Y")) {//и при этом он равен у,
                             System.out.print(entranceArr[j] + AllNumAfterY[NumAfterYCount]);//выписываем у и цифру после него
                             NumAfterYCount++;
@@ -50,4 +53,5 @@ public class EnterX {
         }
     }
 }
+
 
