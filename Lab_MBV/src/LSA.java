@@ -65,6 +65,7 @@ public class LSA {
                 if (arrStr[i].equals("X")) {
                     int j = i + 1;
                     while (Character.isDigit(arrStr[j].charAt(0))) {
+                        temp += arrStr[j];
                         check++;
                         j++;
                     }
@@ -86,7 +87,7 @@ public class LSA {
                             return false;
                         }
                     } else {
-                        System.out.println("Ошибка под индексом " + (j + 2) + "\nПосле X должна идти стрелка вверх!");
+                        System.out.println("Ошибка под индексом " + (j + 2) + "\nПосле X" + temp + " должна идти стрелка вверх!");
                         return false;
                     }
                     i = j;
@@ -139,9 +140,8 @@ public class LSA {
                     return true;
                 }
             }
-        return true;
-        }
-        else {
+            return true;
+        } else {
             System.out.println("Проверьте правильность ввода начального и конечного оператора");
             return false;
         }
