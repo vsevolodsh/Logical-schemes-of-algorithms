@@ -57,7 +57,7 @@ public class Main {
     }
     public static void main(String[] args) {
         //Ynv1X0^1v2X1^6X2^8v5Y5Y6W^9v6X2^7Y2Y3v3X3^5W^4v7Y1Y2v4Y5W^2v8Y1Y4W^3v9Yk
-        //YnY1X0^1Y2Y3v1Y4Yk
+        //Ynv1X0^1x1^2x2^3Y1Y2W^4v3X3^4Y1Y3W^5v4X4^5W^6v5Y4W^6v2Y1W^3v6Yk
         //Ynv1X0^1v2X1^3X2^4Y2Y3Y4v6X4^5W^2v3Y1Y2Y3W^6v4X3^7W^8v7Y3Y4Y5v5Y5Y6v8Yk
        switchLsa();
 
