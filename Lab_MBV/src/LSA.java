@@ -4,8 +4,7 @@ import java.util.Scanner;
 
 public class LSA {
 
-    public static String[] Alphabet = "YnkX^vw1234567890".split("");
-    public static String[] Nums = "1234567890".split("");
+    public static String[] Alphabet = "YnkX^vW1234567890".split("");
 
     public static String consoleInput() {
         System.out.println("Введите ЛСА: ");
@@ -18,32 +17,41 @@ public class LSA {
         return entrance;
     }
 
-    public static String fileInput(String entrance) {
-        StringBuilder result = new StringBuilder();
+    public static String fileInput(String name) {
+        StringBuilder str = new StringBuilder();
 
-        try (FileReader reader = new FileReader(entrance)) {
-            FileInputStream fis = new FileInputStream(entrance);
+        try (FileReader reader = new FileReader(name)) {
+            FileInputStream fis = new FileInputStream(name);
             int c;
             char[] buff = new char[fis.available()];
 
             while ((c = reader.read(buff)) > 0) {
                 if (c < buff.length + 1) {
                     buff = Arrays.copyOf(buff, c);
-                    result.append(buff);
+                    str.append(buff);
                 }
             }
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-
-        if (!checkEntrance(result.toString())) {
-            System.out.println("Проверьте содержимое файла и повторите попытку снова");
-            System.exit(0);
-        }
-        return result.toString();
+        return str.toString();
     }
 
     public static boolean checkEntrance(String str) {
+        String[] newStrArr = str.split("");
+        boolean[] checkArr = new boolean[newStrArr.length];
+
+        for (int i = 0; i < newStrArr.length; i++) {
+            for (int j = 0; j < Alphabet.length; j++) {
+                if (newStrArr[i].equals(Alphabet[j])) {
+                    checkArr[i] = true;
+                }
+            }
+            if (!checkArr[i]) {
+                System.out.print("Символ номер " + (i + 1) + " неправильный");
+                return false;
+            }
+        }
         if (str.startsWith("Yn")) {
             if (str.endsWith("Yk")) {
                 str = str.substring(2, str.length() - 2);
@@ -127,7 +135,7 @@ public class LSA {
                         }
                         i = j;
                     }
-                    if(arrStr[i].equals("*")){
+                    if (arrStr[i].equals("*")) {
                         return true;
                     }
                 }
@@ -137,9 +145,8 @@ public class LSA {
             }
             return true;
         } else {
-            System.out.println("Ошибка под индексом " + 1 + "\nСтрока должна кончаться Yk");
+            System.out.println("Ошибка под индексом " + 1 + "\nСтрока должна начинаться с Yn");
             return false;
         }
     }
-
 }
