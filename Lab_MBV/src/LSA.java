@@ -43,67 +43,103 @@ public class LSA {
         return result.toString();
     }
 
-    private static boolean checkEntrance(String entrance) {
-        boolean checkDone = true;
-        String[] newStrArr = entrance.split("");
-        boolean[] checkArr = new boolean[newStrArr.length];
-
-        if (entrance.startsWith("Yn") && entrance.endsWith("Yk")) {
-            for (int i = 0; i < newStrArr.length; i++) {
-                for (int j = 0; j < Alphabet.length; j++) {
-
-                    if (newStrArr[i].equals(Alphabet[j])) {
-                        checkArr[i] = true;
+    public static boolean checkEntrance(String str) {
+        if (str.startsWith("Yn")) {
+            if (str.endsWith("Yk")) {
+                str = str.substring(2, str.length() - 2);
+                str = str + "*";
+                String[] arrStr = str.split("");
+                String temp = "";
+                int i = 0;
+                int check = 0;
+                while (i != arrStr.length) {
+                    temp = "";
+                    if (arrStr[i].equals("X")) {
+                        int j = i + 1;
+                        while (Character.isDigit(arrStr[j].charAt(0))) {
+                            check++;
+                            j++;
+                        }
+                        if (j < i + 2) {
+                            System.out.println("Ошибка под индексом " + (j + 2) + "\nПосле Х должено идти число!");
+                            return false;
+                        }
+                        check = 0;
+                        System.out.println(arrStr[j]);
+                        if (arrStr[j].equals("^")) {
+                            j++;
+                            i = j;
+                            while (Character.isDigit(arrStr[j].charAt(0))) {
+                                check++;
+                                j++;
+                            }
+                            if (j < i + 1) {
+                                System.out.println("Ошибка под индексом " + (j + 2) + "\nПосле стрелки вверх должно идти число!");
+                                return false;
+                            }
+                        } else {
+                            System.out.println("Ошибка под индексом " + (j + 2) + "\nПосле X должна идти стрелка вверх!");
+                            return false;
+                        }
+                        i = j;
                     }
-
+                    if (arrStr[i].equals("Y")) {
+                        int j = i + 1;
+                        while (Character.isDigit(arrStr[j].charAt(0))) {
+                            check++;
+                            j++;
+                        }
+                        if (j < i + 2) {
+                            System.out.println("Ошибка под индексом " + (j + 2) + "\nПосле Y должено идти число!");
+                            return false;
+                        }
+                        i = j;
+                    }
+                    if (arrStr[i].equals("v")) {
+                        int j = i + 1;
+                        while (Character.isDigit(arrStr[j].charAt(0))) {
+                            check++;
+                            j++;
+                        }
+                        if (j < i + 2) {
+                            System.out.println("Ошибка под индексом " + (j + 2) + "\nПосле стрелки вниз должено идти число!");
+                            return false;
+                        }
+                        i = j;
+                    }
+                    if (arrStr[i].equals("W")) {
+                        int j = i + 1;
+                        if (arrStr[j].equals("^")) {
+                            j++;
+                            i = j;
+                            while (Character.isDigit(arrStr[j].charAt(0))) {
+                                check++;
+                                j++;
+                            }
+                            if (j < i + 1) {
+                                System.out.println("Ошибка под индексом " + (j + 2) + "\nПосле стрелки вниз должено идти число!");
+                                return false;
+                            }
+                        } else {
+                            System.out.println("Ошибка под индексом " + (j + 2) +
+                                    "\nПосле безусловного перехода должена идти стрелка вверх!");
+                            return false;
+                        }
+                        i = j;
+                    }
+                    if(arrStr[i].equals("*")){
+                        return true;
+                    }
                 }
-                if (!checkArr[i]) {
-                    System.out.print("Символ номер " + (i + 1) + " неправильный; ");
-                    checkDone = false;
-                }
+            } else {
+                System.out.println("Ошибка под индексом " + (str.length() - 1) + "\nСтрока должна кончаться Yk");
+                return false;
             }
+            return true;
         } else {
-            System.out.println("Проверьте правильность ввода начального и конечного оператора");
-            checkDone = false;
+            System.out.println("Ошибка под индексом " + 1 + "\nСтрока должна кончаться Yk");
+            return false;
         }
-
-
-        for (int i = 3; i < newStrArr.length - 1; i++) {
-            char ch = newStrArr[i].charAt(0);
-            if (newStrArr[i - 1].equals("Y")) {
-
-                if (!(Character.isDigit(ch))) {
-                    System.out.println("После Y должна ставиться какая-то цифра, проверьте элемент " + i);
-                    checkDone = false;
-                }
-
-            }
-            if (newStrArr[i - 1].equals("X")) {
-
-                if (!(Character.isDigit(ch))) {
-                    System.out.println("После X должна ставиться какая-то цифра, проверьте элемент " + i);
-                    checkDone = false;
-                }
-            }
-            if (newStrArr[i - 1].equals("v")) {
-
-                if (!(Character.isDigit(ch))) {
-                    System.out.println("После нижней стрелки должна ставиться какая-то цифра, проверьте элемент " + i);
-                    checkDone = false;
-                }
-            }
-            if (newStrArr[i - 1].equals("w")) {
-                if ((!newStrArr[i].equals("^"))) {
-                    System.out.println("После безусловного перехода w должна ставиться стрелка вверх, проверьте элемент " + i);
-                }
-                if (!(Character.isDigit(newStrArr[i + 1].charAt(0)))) {
-                    System.out.println("После стрелки вверх должна ставиться какая-то цифра, проверьте элемент " + (i + 1));
-                    checkDone = false;
-                }
-            }
-
-        }
-        return checkDone;
     }
 
 }
