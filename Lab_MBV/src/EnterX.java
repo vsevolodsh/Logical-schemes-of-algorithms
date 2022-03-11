@@ -1,4 +1,3 @@
-package LabaMBV;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +7,8 @@ public class EnterX {
     public static String newStrConsX = "";
     public static String newStrAllX = "";
     public static int indexX = 0;
+    public static int circleCount = 0;
+
 
     public static ArrayList<String> createArrayOfString(String str) {
         ArrayList<String> arrayList = new ArrayList<>();
@@ -116,6 +117,10 @@ public class EnterX {
     }
 
     public static String allX(String entrance, int index, ArrayList<String> arrX) {
+        if (circleCount>100){
+            System.out.println("Программа попала в бесконечный цикл. Результат: ");
+            return newStrAllX;
+        }
         ArrayList<String> etalonArr = createArrayOfString(entrance);
         for (int i = index; i < etalonArr.size(); i++) {
             index = i;
@@ -132,6 +137,7 @@ public class EnterX {
             }
 
             if (str.substring(0, 1).equals("X")) {
+                circleCount++;
                 if (arrX.get(Integer.parseInt(getNum(str))).equals("0")) {
                     String temp = "v" + str.substring(str.indexOf("^") + 1);
                     allX(entrance, etalonArr.indexOf(temp) + 1, arrX);
@@ -152,6 +158,10 @@ public class EnterX {
     }
 
     public static String allValueX(String entrance, int index, ArrayList<String> arrX) {
+        if (circleCount>100){
+            System.out.println("Программа попала в бесконечный цикл. Результат: ");
+            return newStrAllX;
+        }
         ArrayList<String> etalonArr = createArrayOfString(entrance);
         for (int i = index; i < etalonArr.size(); i++) {
             index = i;
@@ -214,8 +224,10 @@ public class EnterX {
         }
         return listX;
     }
-//
+    //
+
     public static int getX() {
+        
         Scanner scan = new Scanner(System.in);
         System.out.println("Введите х:");
         return scan.nextInt();
