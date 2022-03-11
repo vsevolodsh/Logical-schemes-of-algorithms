@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -90,7 +89,8 @@ public class EnterX {
             }
 
             if (str.substring(0, 1).equals("X")) {
-                int gX = getX();
+                String numAfterX = str.substring(1, str.indexOf("^"));
+                int gX = getX(numAfterX);
                 if (gX == 0) {
                     String temp = "v" + str.substring(str.indexOf("^") + 1);
                     System.out.println("Промежуточный результат: " + newStrConsX);
@@ -217,7 +217,8 @@ public class EnterX {
         ArrayList<String> listX = new ArrayList<String>(Arrays.asList(x));
         for (int i = 0; i < x.length; i++) {
             if (!x[i].equals("0") && !x[i].equals("1")) {
-                System.out.println("Неверное значение X под номером " + (i + 1) + "\nПовторите ввод!");
+                System.out.println("Неверное значение X под номером " + (i + 1) +
+                        "\nЗначение х может принимать только 0 или 1.Повторите ввод!");
                 listX = enterX();
                 break;
             }
@@ -226,10 +227,14 @@ public class EnterX {
     }
     //
 
-    public static int getX() {
-        
+    public static int getX(String str) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Введите х:");
-        return scan.nextInt();
+        System.out.printf("Введите х%s:", str);
+        String x = scan.nextLine();
+        if(!x.equals("0") && !x.equals("1")){
+            System.out.println("Значение х может принимать только 0 или 1. Повторите ввод.");
+            x = String.valueOf(getX(str));
+        }
+        return Integer.parseInt(x);
     }
 }
