@@ -1,3 +1,5 @@
+package LabaMBV;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -212,7 +214,7 @@ public class EnterX {
         }
         return listX;
     }
-
+//
     public static int getX() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Введите х:");
